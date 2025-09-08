@@ -1,0 +1,38 @@
+{
+    "customFileOrder.rules": {
+        "src": {
+            "order": [
+                "core",
+                "app",
+                "interface-adapters",
+                "infrastructure",
+                "DI",
+                "routes",
+                "app.ts",
+                "config.ts"
+            ],
+            "type": "manual"
+        },
+        "/home/joao/Projects/templates/node-server-template/src/infrastructure": {
+            "order": [
+                "http",
+                "database",
+                "models",
+                "repositories",
+                "services"
+            ],
+            "type": "manual"
+        },
+        "/home/joao/Projects/templates/node-server-template/src/app/use-cases/user": {
+            "order": [
+                "get-user-by-id.use-case.ts",
+                "get-user-by-email.use-case.ts",
+                "get-user-by-username.use-case.ts",
+                "update-user.use-case.ts",
+                "update-password.use-case.ts",
+                "delete-user.use-case.ts"
+            ],
+            "type": "manual"
+        }
+    },
+}
