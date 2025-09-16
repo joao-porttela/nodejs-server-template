@@ -91,18 +91,3 @@ npm start
 - Start: start
 
 **License MIT — see LICENSE**
-
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
