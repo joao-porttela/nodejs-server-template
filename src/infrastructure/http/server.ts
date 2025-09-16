@@ -8,7 +8,7 @@ import { App } from "../../app.js";
 // Config
 import { PORT } from "../../config.js";
 
-const port = PORT;
+const port = PORT || 8080;
 
 declare global {
     var app: Server<typeof IncomingMessage, typeof ServerResponse> 
