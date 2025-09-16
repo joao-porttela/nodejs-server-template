@@ -1,5 +1,3 @@
-<a name='ioctopus' href='https://www.npmjs.com/package/@evyweb/ioctopus'></a>
-
 # NODEJS SERVER TEMPLATE
 
 A minimal, modular Node.js server template using Express, Mongoose and a simple IoC container.  
@@ -8,7 +6,7 @@ Designed for quick prototyping or as a starting point for production services.
 
 ## Features
 - Clean project structure with separation between core, app (use-cases), interface-adapters (controllers), infrastructure and DI modules.
-- Dependency Injection via [`@evyweb/ioctopus`](#ioctopus).
+- Dependency Injection via [`@evyweb/ioctopus`](https://www.npmjs.com/package/@evyweb/ioctopus).
 - JWT auth with RS256 using private/public keys.
 - Password hashing with bcrypt.
 - Transaction manager wrapper for Mongoose sessions.
