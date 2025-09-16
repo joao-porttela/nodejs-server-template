@@ -8,7 +8,7 @@ Designed for quick prototyping or as a starting point for production services.
 
 ## Features
 - Clean project structure with separation between core, app (use-cases), interface-adapters (controllers), infrastructure and DI modules.
-- Dependency Injection via [`@evyweb/ioctopus`](ioctopus).
+- Dependency Injection via [`@evyweb/ioctopus`](#ioctopus).
 - JWT auth with RS256 using private/public keys.
 - Password hashing with bcrypt.
 - Transaction manager wrapper for Mongoose sessions.
