@@ -1,12 +1,15 @@
 import { Router, Request, Response } from "express";
+import createLogger from "logging";
 
-import { getInjection } from "../../DI/container";
+import { getInjection } from "../../DI/container.js";
 
 const authRouter: Router = Router();
 
 const authController = getInjection("IAuthController");
 
-authRouter.use('/sign-up', async (req: Request, res: Response): Promise<any> => {
+const logger = createLogger('AUTH ROUTER');
+
+authRouter.post('/sign-up', async (req: Request, res: Response): Promise<any> => {
     try {
         const { email, username, password, confirmPassword } = req.body;
 
@@ -24,7 +27,7 @@ authRouter.use('/sign-up', async (req: Request, res: Response): Promise<any> => 
 
         return res.status(200).json(response);
     } catch (err: any) {
-        console.log(`❌ AUTH_ROUTER - SIGN_UP: ${err.message}`);
+        logger.error(`SIGN UP: ${err.message}`);
 
         return res.status(500).json({
             data: null,
@@ -34,7 +37,7 @@ authRouter.use('/sign-up', async (req: Request, res: Response): Promise<any> => 
     }
 });
 
-authRouter.use('/login', async (req: Request, res: Response): Promise<any> => {
+authRouter.post('/login', async (req: Request, res: Response): Promise<any> => {
     try {
         const { username, password } = req.body;
 
@@ -46,13 +49,17 @@ authRouter.use('/login', async (req: Request, res: Response): Promise<any> => {
             });
         }
 
-        const response = await authController.signIn({ username, password });
+        const response = await authController.signIn({
+            username,
+            password,
+        });
+
 
         if (response.error) return res.status(401).json(response);
 
         return res.status(200).json(response);
     } catch (err: any) {
-        console.log(`❌ AUTH_ROUTER - LOGIN: ${err.message}`);
+        logger.error(`LOGIN: ${err.message}`);
 
         return res.status(500).json({
             data: null,
@@ -64,15 +71,13 @@ authRouter.use('/login', async (req: Request, res: Response): Promise<any> => {
 
 authRouter.use('/verify-token', async (req: Request, res: Response): Promise<any> => {
     try {
-        const { token } = req.body;
+        const authHeader = req.headers['authorization'];
 
-        if (!token) {
-            return res.status(400).json({
-                data: null,
-                message: "Missing required fields",
-                error: true
-            });
-        }
+        if (!authHeader) return res.status(401).json({ message: "No token provided" });
+
+        const token = authHeader.split(" ")[1];
+
+        if (!token) return res.status(401).json({ message: "Malformed token" });
 
         const response = await authController.validateToken({ token });
 
@@ -80,7 +85,7 @@ authRouter.use('/verify-token', async (req: Request, res: Response): Promise<any
 
         return res.status(200).json(response);
     } catch (err: any) {
-        console.log(`❌ AUTH_ROUTER - VERIFY_TOKEN: ${err.message}`);
+        logger.error(`VERIFY TOKEN: ${err.message}`);
 
         return res.status(500).json({
             data: null,

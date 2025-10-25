@@ -3,13 +3,13 @@ import { createContainer } from "@evyweb/ioctopus";
 import { DI_SYMBOLS, DI_RETURN_TYPES } from "./types";
 
 import { createAuthenticationModule } from "./modules/authentication.module";
-import { createTransactionManagerService } from "./modules/transaction.module";
+import { createTransactionServiceModule } from "./modules/transaction.module";
 import { createUserModule } from "./modules/user.module";
 
 const ApplicationContainer = createContainer();
 
 ApplicationContainer.load(Symbol("AuthenticationModule"), createAuthenticationModule());
-ApplicationContainer.load(Symbol("TransactionModule"), createTransactionManagerService());
+ApplicationContainer.load(Symbol("TransactionModule"), createTransactionServiceModule());
 ApplicationContainer.load(Symbol("UserModule"), createUserModule());
 
 /**

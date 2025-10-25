@@ -1,6 +1,6 @@
-import { IEntity } from "./entity.interface";
+import { Entity } from "./entity.interface";
 
-export interface IUser extends IEntity<{
+export interface IUser extends Entity<{
     email: string;
     username: string;
     password: string;

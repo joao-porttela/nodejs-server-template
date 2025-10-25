@@ -1,6 +1,5 @@
-export interface IEntity<T> {
-    _id: string;
-    data: T;
-    createdAt: Date;
-    updatedAt: Date;
+export interface IEntity {
+    _id?: string;
 }
+
+export type Entity<T> = T & IEntity;

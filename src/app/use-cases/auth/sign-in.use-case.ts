@@ -14,31 +14,21 @@ interface signInUseCaseProps {
 
 export type ISignInUseCase = ReturnType<typeof signInUseCase>;
 
-export async function signInUseCase(UserRepository: IUserRepository, AuthenticationService: IAuthenticationService) {
-  return async function signInUseCase({ username, password }: signInUseCaseProps): Promise<IResponse<{ token: string } | null>> {
-    try {
-      const response = await UserRepository.getUserByUsername(username);
+export function signInUseCase(UserRepository: IUserRepository, AuthenticationService: IAuthenticationService) {
+  return async function ({ username, password }: signInUseCaseProps): Promise<IResponse<{ token: string } | null>> {
+    const response = await UserRepository.getUserByUsername(username, false);
 
-      if (response.error || !response.data) throw new AuthenticationError(response.message);
+    if (response.error || !response.data) throw new AuthenticationError(response.message);
 
-      const user: IUser['data'] = response.data.user.data;
+    const user: IUser = response.data.user;
 
-      const validPassword = await AuthenticationService.validatePasswords(
-        password,
-        user.password
-      );
+    const validPassword = await AuthenticationService.validatePasswords(
+      password,
+      user.password
+    );
 
-      if (!validPassword) throw new AuthenticationError("Incorrect credentials");
-      
-      return await AuthenticationService.createToken(user.username);
-    } catch (err: any) {
-      console.log(`❌ SIGN_IN_USE_CASE: ${err.message}`);
+    if (!validPassword || !validPassword.data.valid) throw new AuthenticationError("Incorrect credentials");
 
-      return {
-        data: null,
-        message: err.message,
-        error: true,
-      }
-    }
+    return await AuthenticationService.createToken(user.username, user.role!);
   }
 }

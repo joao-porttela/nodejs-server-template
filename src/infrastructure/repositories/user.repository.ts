@@ -1,23 +1,32 @@
+// Modules
+import { ClientSession } from "mongoose";
+import createLogger from "logging";
+
 // Core
-import { IUser } from "../../core/entities/user.interface";
-import { IResponse } from "../../core/interfaces/response.interface";
+import { IUser } from "../../core/entities/user.interface.js";
+import { IResponse } from "../../core/interfaces/response.interface.js";
 
 // App
-import { IUserRepository } from "../../app/repositories/user.repository";
-import { User } from "../models/user.model";
+import { IUserRepository } from "../../app/repositories/user.repository.js";
+
+// Infrastructure
+// |__ Models
+import { IUserModel } from "../types/models.type.js";
+
+const logger = createLogger('USER REPOSITORY');
 
 export class UserRepository implements IUserRepository {
-    constructor() { }
+    constructor(
+        private readonly _user: IUserModel,
+    ) { }
 
-    async createUser(input: IUser["data"]): Promise<IResponse<{ user: IUser } | null>> {
+    async createUser(input: IUser): Promise<IResponse<{ user: IUser } | null>> {
         try {
-            const user = await User.create({
-                data: {
-                    email: input.email,
-                    username: input.username,
-                    password: input.password,
-                    role: input.role,
-                }
+            const user = await this._user.create({
+                email: input.email,
+                username: input.username,
+                password: input.password,
+                role: input.role,
             });
 
             return {
@@ -28,19 +37,19 @@ export class UserRepository implements IUserRepository {
                 error: false,
             }
         } catch (err: any) {
-            console.log(`❌ USER_REPOSITORY - CREATE_USER: ${err.message}`);
+            logger.error(`CREATE USER: ${err.message}`);
 
             return {
                 data: null,
-                message: err.message,
+                message: err.message || 'Oops! Something went wrong',
                 error: true,
             }
         }
     }
 
-    async getUser(_id: string): Promise<IResponse<{ user: IUser } | null>> {
+    async getUser(_id: string, select = true): Promise<IResponse<{ user: IUser } | null>> {
         try {
-            const user: IUser | null = await User.findById(_id);
+            const user = await this._user.findById(_id).select(select ? "-password" : "");
 
             if (!user) throw new Error('User not found');
 
@@ -52,21 +61,19 @@ export class UserRepository implements IUserRepository {
                 error: false,
             }
         } catch (err: any) {
-            console.log(`❌ USER_REPOSITORY - GET_USER: ${err.message}`);
+            logger.error(`GET USER: ${err.message}`);
 
             return {
                 data: null,
-                message: err.message,
+                message: err.message || 'Oops! Something went wrong',
                 error: true,
             }
         }
     }
 
-    async getUserByEmail(email: string): Promise<IResponse<{ user: IUser } | null>> {
+    async getUserByEmail(email: string, select = true): Promise<IResponse<{ user: IUser } | null>> {
         try {
-            const user: IUser | null = await User.findOne({
-                "data.email": email
-            });
+            const user = await this._user.findOne({ email }).select(select ? "-password" : "");
 
             if (!user) throw new Error('User not found');
 
@@ -78,21 +85,19 @@ export class UserRepository implements IUserRepository {
                 error: false,
             }
         } catch (err: any) {
-            console.log(`❌ USER_REPOSITORY - GET_USER_BY_EMAIL: ${err.message}`);
+            logger.error(`GET USER BY EMAIL: ${err.message}`);
 
             return {
                 data: null,
-                message: err.message,
+                message: err.message || 'Oops! Something went wrong',
                 error: true,
             }
         }
     }
 
-    async getUserByUsername(username: string): Promise<IResponse<{ user: IUser } | null>> {
+    async getUserByUsername(username: string, select = true): Promise<IResponse<{ user: IUser } | null>> {
         try {
-            const user: IUser | null = await User.findOne({
-                "data.username": username,
-            });
+            const user = await this._user.findOne({ username: username }).select(select ? "-password" : "");
 
             if (!user) throw new Error('User not found');
 
@@ -104,33 +109,42 @@ export class UserRepository implements IUserRepository {
                 error: false,
             }
         } catch (err: any) {
-            console.log(`❌ USER_REPOSITORY - GET_USER_BY_USERNAME: ${err.message}`);
+            logger.error(`GET USER BY USERNAME: ${err.message}`);
 
             return {
                 data: null,
-                message: err.message,
+                message: err.message || 'Oops! Something went wrong',
                 error: true,
             }
         }
     }
 
-    async updateUser(_id: string, input: { email: string; username: string; }): Promise<IResponse<IUser | null>> {
+    async updateUser(_id: string, input: { email?: string; username?: string; customerId?: string }, session?: ClientSession): Promise<IResponse<{ user: IUser } | null>> {
         try {
-            const user = await User.findOneAndUpdate({ _id }, {
-                ...input
-            });
+            const user: IUser | null = await this._user.findByIdAndUpdate(
+                _id,
+                { ...input },
+                {
+                    new: true,
+                    session
+                }
+            );
+
+            if (!user) throw new Error('User not found');
 
             return {
-                data: user,
+                data: {
+                    user: user
+                },
                 message: 'User updated successfully',
                 error: false,
             }
         } catch (err: any) {
-            console.log(`❌ USER_REPOSITORY - UPDATE_USER: ${err.message}`);
+            logger.error(`UPDATE USER: ${err.message}`);
 
             return {
                 data: null,
-                message: err.message,
+                message: err.message || 'Oops! Something went wrong',
                 error: true,
             }
         }
@@ -138,7 +152,7 @@ export class UserRepository implements IUserRepository {
 
     async updatePassword(_id: string, password: string): Promise<IResponse<IUser | null>> {
         try {
-            const user = await User.findOneAndUpdate({ _id }, {
+            const user = await this._user.findOneAndUpdate({ _id }, {
                 password,
             })
 
@@ -148,11 +162,11 @@ export class UserRepository implements IUserRepository {
                 error: false,
             }
         } catch (err: any) {
-            console.log(`❌ USER_REPOSITORY - UPDATE_PASSWORD: ${err.message}`);
+            logger.error(`UPDATE PASSWORD: ${err.message}`);
 
             return {
                 data: null,
-                message: err.message,
+                message: err.message || 'Oops! Something went wrong',
                 error: true,
             }
         }
@@ -160,7 +174,7 @@ export class UserRepository implements IUserRepository {
 
     async deleteUser(_id: string): Promise<IResponse<null>> {
         try {
-            await User.deleteOne({ _id });
+            await this._user.deleteOne({ _id });
 
             return {
                 data: null,
@@ -168,11 +182,11 @@ export class UserRepository implements IUserRepository {
                 error: false,
             }
         } catch (err: any) {
-            console.log(`❌ USER_REPOSITORY - DELETE_USER: ${err.message}`);
+            logger.error(`DELETE USER: ${err.message}`);
 
             return {
                 data: null,
-                message: err.message,
+                message: err.message || 'Oops! Something went wrong',
                 error: true,
             }
         }

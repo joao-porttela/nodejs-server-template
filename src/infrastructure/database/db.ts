@@ -1,6 +1,11 @@
+// Modules
 import mongoose, { Mongoose } from "mongoose";
+import createLogger from "logging";
 
-import { URI, DB_NAME } from "../../config";
+// Config
+import { URI, DB_NAME } from "../../config.js";
+
+const logger = createLogger('DATABASE');
 
 const config = {
     uri: URI,
@@ -13,13 +18,17 @@ declare global {
 
 export async function connectDb(): Promise<void> {
     try {
+        if (!config.uri) throw new Error("No URI provided");
+
+        if (!config.dbName) throw new Error("No database name provided");
+
         global.DBClient = await mongoose.connect(config.uri, {
             dbName: config.dbName
         });
-        
-        console.log(`✅ Database connection successful`);
+
+        logger.info(`Database connection successful`);
     } catch (err: any) {
-        console.log(`❌ Database Connection error: ${err.message}`);
+        logger.error(`Database Connection error: ${err.message}`);
     }
 }
 

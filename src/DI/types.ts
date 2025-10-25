@@ -3,7 +3,7 @@ import { IUserRepository } from "../app/repositories/user.repository";
 
 // Services
 import { IAuthenticationService } from "../app/services/auth.service";
-import { ITransactionManagerService } from "../app/services/transaction-manager.service";
+import { ITransactionService } from "../app/services/transaction.service";
 
 // Use Cases
 
@@ -13,16 +13,14 @@ import { ISignUpUseCase } from "../app/use-cases/auth/sign-up.use-case";
 import { IValidateTokenUseCase } from "../app/use-cases/auth/validate-token.use-case";
 
 // |_ User
-import { IGetUserByIdUseCase } from "../app/use-cases/user/get-user-by-id.use-case";
-import { IGetUserByEmailUseCase } from "../app/use-cases/user/get-user-by-email.use-case";
-import { IGetUserByUsernameUseCase } from "../app/use-cases/user/get-user-by-username.use-case";
-import { IUpdateUserUseCase } from "../app/use-cases/user/update-user.use-case";
 import { IUpdatePasswordUseCase } from "../app/use-cases/user/update-password.use-case";
-import { IDeleteUserUseCase } from "../app/use-cases/user/delete-user.use-case";
 
 // Controllers
-import { IAuthController } from "../interface-adapters/controllers/auth/auth.controller";
-import { IUserController } from "../interface-adapters/controllers/user/user.controller";
+import { IAuthController, IUserController } from "../controllers/types/controllers.type";
+
+// |__ Infrastructure
+// |____ Models
+import { IUserModel } from "../infrastructure/types/models.type";
 
 
 export const DI_SYMBOLS = {
@@ -31,7 +29,7 @@ export const DI_SYMBOLS = {
 
     // Services
     IAuthenticationService: Symbol.for("IAuthenticationService"),
-    ITransactionManagerService: Symbol.for("ITransactionManagerService"),
+    ITransactionService: Symbol.for("ITransactionService"),
 
     // Use Cases
 
@@ -41,16 +39,15 @@ export const DI_SYMBOLS = {
     IValidateTokenUseCase: Symbol.for("IValidateTokenUseCase"),
 
     // User
-    IGetUserByIdUseCase: Symbol.for("IGetUserByIdUseCase"),
-    IGetUserByEmailUseCase: Symbol.for("IGetUserByEmailUseCase"),
-    IGetUserByUsernameUseCase: Symbol.for("IGetUserByUsernameUseCase"),
-    IUpdateUserUseCase: Symbol.for("IUpdateUserUseCase"),
     IUpdatePasswordUseCase: Symbol.for("IUpdatePasswordUseCase"),
-    IDeleteUserUseCase: Symbol.for("IDeleteUserUseCase"),
 
     // Controllers
     IAuthController: Symbol.for("IAuthController"),
     IUserController: Symbol.for("IUserController"),
+
+    // Infrastructure
+    // |___ Models
+    IUserModel: Symbol.for("IUserModel"),
 }
 
 export interface DI_RETURN_TYPES {
@@ -59,7 +56,7 @@ export interface DI_RETURN_TYPES {
 
     // Services
     IAuthenticationService: IAuthenticationService;
-    ITransactionManagerService: ITransactionManagerService;
+    ITransactionService: ITransactionService;
 
     // Use Cases
 
@@ -69,14 +66,13 @@ export interface DI_RETURN_TYPES {
     IValidateTokenUseCasse: IValidateTokenUseCase;
 
     // User
-    IGetUserByIdUseCase: IGetUserByIdUseCase;
-    IGetUserByEmailUseCase: IGetUserByEmailUseCase;
-    IGetUserByUsernameUseCase: IGetUserByUsernameUseCase;
-    IUpdateUserUseCase: IUpdateUserUseCase;
     IUpdatePasswordUseCase: IUpdatePasswordUseCase;
-    IDeleteUserUseCase: IDeleteUserUseCase;
 
     // Controllers
     IAuthController: IAuthController;
     IUserController: IUserController;
+
+    // Infrastructure
+    // |___ Models
+    IUserModel: IUserModel;
 }

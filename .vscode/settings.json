@@ -4,10 +4,11 @@
             "order": [
                 "core",
                 "app",
-                "interface-adapters",
+                "controllers",
                 "infrastructure",
                 "DI",
                 "routes",
+                "middlewares",
                 "app.ts",
                 "config.ts"
             ],
@@ -19,18 +20,35 @@
                 "database",
                 "models",
                 "repositories",
-                "services"
+                "services",
+                "types"
             ],
             "type": "manual"
         },
         "/home/joao/Projects/templates/node-server-template/src/app/use-cases/user": {
             "order": [
-                "get-user-by-id.use-case.ts",
-                "get-user-by-email.use-case.ts",
-                "get-user-by-username.use-case.ts",
-                "update-user.use-case.ts",
-                "update-password.use-case.ts",
-                "delete-user.use-case.ts"
+                "update-password.use-case.ts"
+            ],
+            "type": "manual"
+        },
+        "/home/joao/Projects/templates/node-server-template/src/infrastructure/types": {
+            "order": [
+                "models.type.ts"
+            ],
+            "type": "manual"
+        },
+        "/home/joao/Projects/templates/node-server-template/src/controllers": {
+            "order": [
+                "DTOs",
+                "auth",
+                "user",
+                "types"
+            ],
+            "type": "manual"
+        },
+        "/home/joao/Projects/templates/node-server-template/src/controllers/types": {
+            "order": [
+                "controllers.type.ts"
             ],
             "type": "manual"
         }

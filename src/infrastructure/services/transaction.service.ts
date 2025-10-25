@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 // Core
-import { ITransaction } from "../../core/interfaces/transaction.interface";
+import { ITransaction } from "../../core/interfaces/transaction.interface.js";
 
 // App
-import { ITransactionManagerService } from "../../app/services/transaction-manager.service";
+import { ITransactionService } from "../../app/services/transaction.service.js";
 
-export class TransactionManagerService implements ITransactionManagerService {
+export class TransactionService implements ITransactionService {
   /**
    * Initiates a database transaction, executing the provided callback within the transaction context.
    *
@@ -25,18 +25,18 @@ export class TransactionManagerService implements ITransactionManagerService {
     } else {
       // Otherwise, start a new session/transaction
       const session = await mongoose.startSession();
-        let result: T;
-        session.startTransaction();
-        try {
-            result = await clb(session as unknown as ITransaction);
-            await session.commitTransaction();
-        } catch (error) {
-            await session.abortTransaction();
-            throw error;
-        } finally {
-            session.endSession();
-        }
-        return await result;
+      let result: T;
+      session.startTransaction();
+      try {
+        result = await clb(session as unknown as ITransaction);
+        await session.commitTransaction();
+      } catch (error) {
+        await session.abortTransaction();
+        throw error;
+      } finally {
+        session.endSession();
+      }
+      return await result;
     }
   }
 }

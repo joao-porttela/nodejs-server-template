@@ -1,13 +1,13 @@
 import { createModule } from "@evyweb/ioctopus";
-import { TransactionManagerService } from "../../infrastructure/services/transaction-manager.service";
+import { TransactionService } from "../../infrastructure/services/transaction.service.js";
 
-export function createTransactionManagerService() {
+export function createTransactionServiceModule() {
     const transactionManagerModule = createModule();
 
     // Services
     transactionManagerModule
-        .bind(Symbol("ITransactionManagerService"))
-        .toClass(TransactionManagerService);
+        .bind(Symbol("ITransactionService"))
+        .toClass(TransactionService);
 
     return transactionManagerModule;
 };

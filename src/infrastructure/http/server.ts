@@ -1,6 +1,7 @@
 // Modules
-import "dotenv/config";
 import { Server, IncomingMessage, ServerResponse } from "http";
+import createLogger from "logging";
+import "dotenv/config";
 
 // App
 import { App } from "../../app.js";
@@ -8,12 +9,14 @@ import { App } from "../../app.js";
 // Config
 import { PORT } from "../../config.js";
 
-const port = PORT || 8080;
+const logger = createLogger('SERVER');
+
+const port = PORT;
 
 declare global {
-    var app: Server<typeof IncomingMessage, typeof ServerResponse> 
+    var app: Server<typeof IncomingMessage, typeof ServerResponse>
 }
 
-const app = global.app || new App().server.listen(port, () => console.log(`Running server on port: ${port}`));
+const app = global.app || new App().server.listen(port, () => logger.info(`Running server on port: ${port}`));
 
 if (process.env.NODE_ENV !== "production") global.app = app;

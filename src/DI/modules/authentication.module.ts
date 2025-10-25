@@ -4,12 +4,14 @@ import { DI_SYMBOLS } from "../types";
 
 // Use Cases
 import { signInUseCase } from "../../app/use-cases/auth/sign-in.use-case";
+import { signUpUseCase } from "../../app/use-cases/auth/sign-up.use-case";
 import { validateTokenUseCase } from "../../app/use-cases/auth/validate-token.use-case";
 
 // Services
 import { AuthenticationService } from "../../infrastructure/services/auth.service";
-import { signUpUseCase } from "../../app/use-cases/auth/sign-up.use-case";
-import { AuthController } from "../../interface-adapters/controllers/auth/auth.controller";
+
+// Controllers
+import { AuthController } from "../../controllers/auth/auth.controller";
 
 export function createAuthenticationModule() {
     const authenticationModule = createModule();
@@ -42,12 +44,12 @@ export function createAuthenticationModule() {
 
     // Controllers
     authenticationModule.
-    bind(DI_SYMBOLS.IAuthController).
-    toClass(AuthController, [
-        DI_SYMBOLS.ISignInUseCase,
-        DI_SYMBOLS.ISignUpUseCase,
-        DI_SYMBOLS.IValidateTokenUseCase,
-    ])
+        bind(DI_SYMBOLS.IAuthController).
+        toClass(AuthController, [
+            DI_SYMBOLS.ISignInUseCase,
+            DI_SYMBOLS.ISignUpUseCase,
+            DI_SYMBOLS.IValidateTokenUseCase,
+        ])
 
     return authenticationModule;
 }

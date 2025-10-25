@@ -8,7 +8,7 @@ interface validateTokenUseCaseProps {
 
 export type IValidateTokenUseCase = ReturnType<typeof validateTokenUseCase>;
 
-export async function validateTokenUseCase(AuthenticationService: IAuthenticationService) {
+export function validateTokenUseCase(AuthenticationService: IAuthenticationService) {
     return async function validateTokenUseCase({ token }: validateTokenUseCaseProps): Promise<IResponse<{ valid: boolean }>> {
         const response = AuthenticationService.validateToken(token);
 

@@ -5,14 +5,14 @@ import { IAuthenticationService } from "../../services/auth.service";
 
 export type IUpdatePasswordUseCase = ReturnType<typeof updatePasswordUseCase>;
 
-export async function updatePasswordUseCase(UserRepository: IUserRepository, AuthenticationService: IAuthenticationService) {
+export function updatePasswordUseCase(UserRepository: IUserRepository, AuthenticationService: IAuthenticationService) {
     return async function updatePasswordUseCase({ _id, password, newPassword, confirmNewPassword }: { _id: string; password: string; newPassword: string; confirmNewPassword: string; }) {
         try {
             const userResponse = await UserRepository.getUser(_id);
 
             if (!userResponse || !userResponse.data) throw new Error("User not found");
 
-            const { data: valid } = await AuthenticationService.validatePasswords(password, userResponse.data.data.password);
+            const { data: valid } = await AuthenticationService.validatePasswords(password, userResponse.data.user.password);
 
             if (!valid) throw new AuthenticationError("Incorrect Password");
 
@@ -27,7 +27,7 @@ export async function updatePasswordUseCase(UserRepository: IUserRepository, Aut
             return {
                 data: null,
                 message: err.message,
-                error: true, 
+                error: true,
             }
         }
     }
