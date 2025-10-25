@@ -3,18 +3,17 @@ import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
 
 // Core
-import { IResponse } from "../../core/interfaces/response.interface";
+import { IResponse } from "../../core/interfaces/response.interface.js";
 
 // Interfaces
-import { IAuthenticationService } from "../../app/services/auth.service";
+import { IAuthenticationService } from "../../app/services/auth.service.js";
 
 // Config
-import { PRIVATE_KEY, PUBLIC_KEY } from '../../config';
+import { PRIVATE_KEY, PUBLIC_KEY } from "../../config.js";
 
 export class AuthenticationService implements IAuthenticationService {
     private readonly _privateKey = PRIVATE_KEY;
     private readonly _publickKey = PUBLIC_KEY;
-
 
     constructor() { }
 

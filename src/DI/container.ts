@@ -1,10 +1,10 @@
 import { createContainer } from "@evyweb/ioctopus";
 
-import { DI_SYMBOLS, DI_RETURN_TYPES } from "./types";
+import { DI_SYMBOLS, DI_RETURN_TYPES } from "./types.js";
 
-import { createAuthenticationModule } from "./modules/authentication.module";
-import { createTransactionServiceModule } from "./modules/transaction.module";
-import { createUserModule } from "./modules/user.module";
+import { createAuthenticationModule } from "./modules/authentication.module.js";
+import { createTransactionServiceModule } from "./modules/transaction.module.js";
+import { createUserModule } from "./modules/user.module.js";
 
 const ApplicationContainer = createContainer();
 

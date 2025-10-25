@@ -1,17 +1,17 @@
 import { createModule } from "@evyweb/ioctopus";
 
-import { DI_SYMBOLS } from "../types";
+import { DI_SYMBOLS } from "../types.js";
 
 // Use Cases
-import { signInUseCase } from "../../app/use-cases/auth/sign-in.use-case";
-import { signUpUseCase } from "../../app/use-cases/auth/sign-up.use-case";
-import { validateTokenUseCase } from "../../app/use-cases/auth/validate-token.use-case";
+import { signInUseCase } from "../../app/use-cases/auth/sign-in.use-case.js";
+import { signUpUseCase } from "../../app/use-cases/auth/sign-up.use-case.js";
+import { validateTokenUseCase } from "../../app/use-cases/auth/validate-token.use-case.js";
 
 // Services
-import { AuthenticationService } from "../../infrastructure/services/auth.service";
+import { AuthenticationService } from "../../infrastructure/services/auth.service.js";
 
 // Controllers
-import { AuthController } from "../../controllers/auth/auth.controller";
+import { AuthController } from "../../controllers/auth/auth.controller.js";
 
 export function createAuthenticationModule() {
     const authenticationModule = createModule();

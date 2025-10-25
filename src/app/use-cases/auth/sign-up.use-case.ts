@@ -1,11 +1,11 @@
 // Core
-import { USER_ROLE } from "../../../core/entities/user.interface";
-import { InputParseError } from "../../../core/errors/common.error";
-import { IResponse } from "../../../core/interfaces/response.interface";
+import { USER_ROLE } from "../../../core/entities/user.interface.js";
+import { InputParseError } from "../../../core/errors/common.error.js";
+import { IResponse } from "../../../core/interfaces/response.interface.js";
 
 // App
-import { IUserRepository } from "../../repositories/user.repository";
-import { IAuthenticationService } from "../../services/auth.service";
+import { IUserRepository } from "../../repositories/user.repository.js";
+import { IAuthenticationService } from "../../services/auth.service.js";
 
 export type ISignUpUseCase = ReturnType<typeof signUpUseCase>;
 

@@ -1,19 +1,19 @@
 import { createModule } from "@evyweb/ioctopus";
 
-import { DI_SYMBOLS } from "../types";
+import { DI_SYMBOLS } from "../types.js";
 
 // App
 // |_ Repositories
-import { UserRepository } from "../../infrastructure/repositories/user.repository";
+import { UserRepository } from "../../infrastructure/repositories/user.repository.js";
 
 // |_ Use Cases
-import { updatePasswordUseCase } from "../../app/use-cases/user/update-password.use-case";
+import { updatePasswordUseCase } from "../../app/use-cases/user/update-password.use-case.js";
 
 // Controllers
-import { UserController } from "../../controllers/user/user.controller";
+import { UserController } from "../../controllers/user/user.controller.js";
 
 // Infrastructure
-import { User } from "../../infrastructure/models/user.model";
+import { User } from "../../infrastructure/models/user.model.js";
 
 export function createUserModule() {
     const userModule = createModule();

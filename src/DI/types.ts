@@ -1,27 +1,26 @@
 // Repositories
-import { IUserRepository } from "../app/repositories/user.repository";
+import { IUserRepository } from "../app/repositories/user.repository.js";
 
 // Services
-import { IAuthenticationService } from "../app/services/auth.service";
-import { ITransactionService } from "../app/services/transaction.service";
+import { IAuthenticationService } from "../app/services/auth.service.js";
+import { ITransactionService } from "../app/services/transaction.service.js";
 
 // Use Cases
 
 // |_ Auth
-import { ISignInUseCase } from "../app/use-cases/auth/sign-in.use-case";
-import { ISignUpUseCase } from "../app/use-cases/auth/sign-up.use-case";
-import { IValidateTokenUseCase } from "../app/use-cases/auth/validate-token.use-case";
+import { ISignInUseCase } from "../app/use-cases/auth/sign-in.use-case.js";
+import { ISignUpUseCase } from "../app/use-cases/auth/sign-up.use-case.js";
+import { IValidateTokenUseCase } from "../app/use-cases/auth/validate-token.use-case.js";
 
 // |_ User
-import { IUpdatePasswordUseCase } from "../app/use-cases/user/update-password.use-case";
+import { IUpdatePasswordUseCase } from "../app/use-cases/user/update-password.use-case.js";
 
 // Controllers
-import { IAuthController, IUserController } from "../controllers/types/controllers.type";
+import { IAuthController, IUserController } from "../controllers/types/controllers.type.js";
 
 // |__ Infrastructure
 // |____ Models
-import { IUserModel } from "../infrastructure/types/models.type";
-
+import { IUserModel } from "../infrastructure/types/models.type.js";
 
 export const DI_SYMBOLS = {
     // Repositories

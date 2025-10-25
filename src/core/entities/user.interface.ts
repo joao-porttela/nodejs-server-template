@@ -1,4 +1,4 @@
-import { Entity } from "./entity.interface";
+import { Entity } from "./entity.interface.js";
 
 export interface IUser extends Entity<{
     email: string;

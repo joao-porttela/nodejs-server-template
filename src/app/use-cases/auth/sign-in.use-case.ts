@@ -1,11 +1,11 @@
 // Core
-import { IUser } from "../../../core/entities/user.interface";
-import { IResponse } from "../../../core/interfaces/response.interface";
-import { AuthenticationError } from "../../../core/errors/auth.error";
+import { IUser } from "../../../core/entities/user.interface.js";
+import { IResponse } from "../../../core/interfaces/response.interface.js";
+import { AuthenticationError } from "../../../core/errors/auth.error.js";
 
 // App
-import { IUserRepository } from "../../repositories/user.repository";
-import { IAuthenticationService } from "../../services/auth.service";
+import { IUserRepository } from "../../repositories/user.repository.js";
+import { IAuthenticationService } from "../../services/auth.service.js";
 
 interface signInUseCaseProps {
   username: string;

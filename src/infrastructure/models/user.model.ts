@@ -1,8 +1,8 @@
 // Modules
-import { Schema, model, models } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 // Interfaces
-import { IUser } from "../../core/entities/user.interface";
+import { IUser } from "../../core/entities/user.interface.js";
 
 const userSchema = new Schema<IUser>(
     {
@@ -16,4 +16,4 @@ const userSchema = new Schema<IUser>(
     }
 );
 
-export const User = models.User || model('User', userSchema);
+export const User = mongoose.models.User || model('User', userSchema);

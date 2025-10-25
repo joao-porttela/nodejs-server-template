@@ -1,6 +1,6 @@
-import { IResponse } from "../../../core/interfaces/response.interface";
+import { IResponse } from "../../../core/interfaces/response.interface.js";
 
-import { IAuthenticationService } from "../../services/auth.service";
+import { IAuthenticationService } from "../../services/auth.service.js";
 
 interface validateTokenUseCaseProps {
     token: string

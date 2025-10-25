@@ -1,7 +1,7 @@
 // App
-import { AuthenticationError } from "../../../core/errors/auth.error";
-import { IUserRepository } from "../../repositories/user.repository"
-import { IAuthenticationService } from "../../services/auth.service";
+import { AuthenticationError } from "../../../core/errors/auth.error.js";
+import { IUserRepository } from "../../repositories/user.repository.js";
+import { IAuthenticationService } from "../../services/auth.service.js";
 
 export type IUpdatePasswordUseCase = ReturnType<typeof updatePasswordUseCase>;
 

@@ -13,6 +13,6 @@ export const URI = process.env.URI || null;
 export const DB_NAME = process.env.DB_NAME || null;
 
 // Auth
-export const PRIVATE_KEY = process.env.PRIVATE_KEY || null;
+export const PRIVATE_KEY = process.env.PRIVATE_KEY!;
 
-export const PUBLIC_KEY = process.env.PUBLIC_KEY || null;
+export const PUBLIC_KEY = process.env.PUBLIC_KEY!;

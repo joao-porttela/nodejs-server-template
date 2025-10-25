@@ -2,16 +2,16 @@
 import z from "zod";
 
 // Core
-import { IResponse } from "../../core/interfaces/response.interface";
-import { InputParseError } from "../../core/errors/common.error";
+import { IResponse } from "../../core/interfaces/response.interface.js";
+import { InputParseError } from "../../core/errors/common.error.js";
 
 // Use Cases
-import { ISignInUseCase } from "../../app/use-cases/auth/sign-in.use-case";
-import { ISignUpUseCase } from "../../app/use-cases/auth/sign-up.use-case";
-import { IValidateTokenUseCase } from "../../app/use-cases/auth/validate-token.use-case";
+import { ISignInUseCase } from "../../app/use-cases/auth/sign-in.use-case.js";
+import { ISignUpUseCase } from "../../app/use-cases/auth/sign-up.use-case.js";
+import { IValidateTokenUseCase } from "../../app/use-cases/auth/validate-token.use-case.js";
 
 // DTOs
-import { signInDTO, signUpDTO, validateTokenDTO } from "../DTOs/auth.dto";
+import { signInDTO, signUpDTO, validateTokenDTO } from "../DTOs/auth.dto.js";
 
 export class AuthController {
     constructor(
